@@ -9,12 +9,16 @@
 <div class="container">
       <div class="row text-center">
 
-        <div class="col-3">
+        <div class="col-6">
 
                 <div class="card-body">
+                    <div class="card-header">
+                    <img src="{{ blog.image | media_filter}}">
+                    </div>
 
                     <ul class="list-unstyled mt-3 mb-4 text-start m-3">
                         <li>{{ object.body }}</li>
+                        <li>Дата публикации: {{ object.date_create }}</li>
                     </ul>
                     <a class="btn btn-warning" href="{% url 'blog:edit' object.pk %}" role="button">Изменить</a>
                     <a class="btn btn-danger" href="{% url 'blog:delete' object.pk %}" role="button">Удалить</a>

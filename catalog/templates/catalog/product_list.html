@@ -28,6 +28,13 @@
                     <a class="btn btn-warning" href="{% url 'catalog:product_edit' object.pk %}" role="button">Изменить</a>
                     <a class="btn btn-danger" href="{% url 'catalog:product_delete' object.pk %}" role="button">Удалить</a>
                 </div>
+                <div class="card-footer">
+                    {% for version in object.versions.all %}
+                    {% if version.is_active %}
+                        <p>Версия: {{ version.num_version }} Название: {{ version.name_version }}</p>
+                    {% endif %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
       {% endfor %}

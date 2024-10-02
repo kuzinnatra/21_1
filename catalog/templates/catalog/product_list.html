@@ -6,21 +6,27 @@
     <h1 class="display-4">Корзиночка</h1>
     <p class="lead">Продукты онлайн</p>
 </div>
-
+<br>
+<div class="container">
+    <a class="btn btn-outline-primary" href="{% url 'catalog:product_create' %}">Добавить товар</a>
+</div>
+<br>
 <div class="container">
       <div class="row text-center">
-      {% for product in object_list %}
+      {% for object in object_list %}
         <div class="col-3">
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
-                    <img src="{{ product.image | media_filter}}">
+                    <img src="{{ object.image | media_filter}}">
                 </div>
                 <div class="card-body">
-                    <h1 class="card-title pricing-card-title">{{ product.name }}</h1>
+                    <h1 class="card-title pricing-card-title">{{ object.name }}</h1>
                     <ul class="list-unstyled mt-3 mb-4 text-start m-3">
-                        <li>{{ product.description|slice:":100" }}</li>
+                        <li>{{ object.description|slice:":100" }}</li>
                     </ul>
-                    <a class="btn btn-primary" href="{% url 'catalog:products_detail' product.pk %}" role="button">Посмотреть</a>
+                    <a class="btn btn-primary" href="{% url 'catalog:product_detail' object.pk %}" role="button">Посмотреть</a>
+                    <a class="btn btn-warning" href="{% url 'catalog:product_edit' object.pk %}" role="button">Изменить</a>
+                    <a class="btn btn-danger" href="{% url 'catalog:product_delete' object.pk %}" role="button">Удалить</a>
                 </div>
             </div>
         </div>

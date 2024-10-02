@@ -23,13 +23,6 @@ class Blog(models.Model):
     is_published = models.BooleanField(default=True, verbose_name='опубликовано')
     slug = models.CharField(max_length=150, verbose_name='slug',null=True, blank=True)
 
-    # заголовок;
-    # slug(реализоватьчерезCharField);
-    # содержимое;
-    # превью(изображение);
-    # датасоздания;
-    # признакпубликации;
-    # количествопросмотров
     def __str__(self):
         return self.title
 

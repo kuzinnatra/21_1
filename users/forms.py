@@ -16,5 +16,5 @@ class ResetPasswordForm(StyleFormMixin, PasswordResetForm):
     """Форма для сброса пароля"""
     class Meta:
         model = User
-        fields = ['email', ]
+        fields = ['email']
 

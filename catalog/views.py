@@ -1,10 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.forms import inlineformset_factory
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 
-from catalog.forms import ProductForm, VersionForm
+from catalog.forms import ProductForm, VersionForm, ProductModeratorForm
 from catalog.models import Product, Version
 
 import catalog
@@ -67,8 +68,22 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         else:
             return self.render_to_response(self.get_context_data(form=form, formset=formset))
 
+    def get_form_class(self):
+        user = self.request.user
+        if user == self.object.owner:
+            return ProductForm
+        if user.has_perm("catalog.can_edit_is_published") and user.has_perm(
+                "catalog.can_edit_description") and user.has_perm("catalog.can_edit_category"):
+            return ProductModeratorForm
+        raise PermissionDenied
 class ProductListView(ListView):
     model = Product
+
+    def get_queryset(self):
+        if self.request.user.is_staff:  # если контент-менеджер
+            return Product.objects.all()  # выводим все блоги
+        else:
+            return Product.objects.filter(is_published=True)  # только опубликованные
 
     def get_context_data(self, *args, object_list=None, **kwargs):
         context_data = super().get_context_data(**kwargs)

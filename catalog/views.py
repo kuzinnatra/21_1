@@ -79,11 +79,11 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 class ProductListView(ListView):
     model = Product
 
-    def get_queryset(self):
-        if self.request.user.is_staff:  # если контент-менеджер
-            return Product.objects.all()  # выводим все блоги
-        else:
-            return Product.objects.filter(is_published=True)  # только опубликованные
+    # def get_queryset(self):
+    #     if self.request.user.is_staff:  # если контент-менеджер
+    #         return Product.objects.all()  # выводим все блоги
+    #     else:
+    #         return Product.objects.filter(is_published=True)  # только опубликованные
 
     def get_context_data(self, *args, object_list=None, **kwargs):
         context_data = super().get_context_data(**kwargs)
